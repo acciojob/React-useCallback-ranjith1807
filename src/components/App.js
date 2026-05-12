@@ -1,12 +1,10 @@
 import React, { useState, useCallback } from 'react';
 
 // 1. Child Component: SkillList
-// Wrapped in React.memo so it only re-renders if its props change.
 const SkillList = React.memo(({ skills, deleteSkill }) => {
-  // console.log("SkillList rendered"); // Uncomment to test optimization
-  
   return (
-    <ul>
+    // Added id="skill-list" here to satisfy the test suite
+    <ul id="skill-list"> 
       {skills.map((skill, idx) => (
         <li
           key={skill}
@@ -23,26 +21,18 @@ const SkillList = React.memo(({ skills, deleteSkill }) => {
 });
 
 // 2. Parent Component: UseCallbackComp
-const App = () => {
-  // Pre-added skills per requirements
+const UseCallbackComp = () => {
   const [skills, setSkills] = useState(["HTML", "CSS", "JavaScript", "React"]);
   const [inputValue, setInputValue] = useState("");
 
-  // Handler to add a new skill
   const handleAddSkill = () => {
     const trimmedInput = inputValue.trim();
-    
-    // Check for empty string and duplicates before adding
     if (trimmedInput !== "" && !skills.includes(trimmedInput)) {
       setSkills([...skills, trimmedInput]);
-      setInputValue(""); // Clear input field
+      setInputValue("");
     }
   };
 
-  // Handler to delete a skill
-  // useCallback caches this function between renders.
-  // By using the functional update form (prevSkills => ...), we don't 
-  // need to include 'skills' in the dependency array, making it perfectly stable.
   const handleDeleteSkill = useCallback((skillToDelete) => {
     setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToDelete));
   }, []);
@@ -74,4 +64,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default UseCallbackComp;
