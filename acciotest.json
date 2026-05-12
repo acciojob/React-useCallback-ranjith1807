@@ -1,0 +1,4 @@
+{
+    "testRepo": "React-useCallback-solution",
+    "pathToFile": "cypress/integration/tests/test.spec.js"
+}
